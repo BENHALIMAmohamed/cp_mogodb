@@ -1,0 +1,155 @@
+MongoDB server version: 5.0.9
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+        https://community.mongodb.com
+---
+The server generated these startup warnings when booting:
+        2022-06-13T20:02:07.288+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use contact
+switched to db contact
+> db.createCollection( "contactlist")
+{ "ok" : 1 }
+>   db.contactlist.insertMany( [
+...       { Last name: "Ben Lahmer", First name: "Fares", Email:"fares@gmail.com", age:26 },
+...       { Last name: "Kefi", First name: "Seif", Email:"Seif@gmail.com", age:15 },
+...       { Last name: "Fatnassi", First name: "Sarra", Email:"Sarra@gmail.com", age:40 }
+...     ] )
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):2:13
+>   db.contactlist.insertMany( [
+...       { Last_name: "Ben Lahmer", First_name: "Fares", Email:"fares@gmail.com", age:26 },
+...       { Last_name: "Kefi", First_name: "Seif", Email:"Seif@gmail.com", age:15 },
+...       { Last_name: "Fatnassi", First_name: "Sarra", Email:"Sarra@gmail.com", age:40 }
+...     ] )
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("62a84e99b9b19cd8671d61b7"),
+                ObjectId("62a84e99b9b19cd8671d61b8"),
+                ObjectId("62a84e99b9b19cd8671d61b9")
+        ]
+}
+> db.contactlist.find()
+{ "_id" : ObjectId("62a84e99b9b19cd8671d61b7"), "Last_name" : "Ben Lahmer", "First_name" : "Fares", "Email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("62a84e99b9b19cd8671d61b8"), "Last_name" : "Kefi", "First_name" : "Seif", "Email" : "Seif@gmail.com", "age" : 15 }
+{ "_id" : ObjectId("62a84e99b9b19cd8671d61b9"), "Last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "Sarra@gmail.com", "age" : 40 }
+> db.contactlist.find().pretty
+function() {
+    this._prettyShell = true;
+    return this;
+}
+> db.contactlist.find().pretty()
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b7"),
+        "Last_name" : "Ben Lahmer",
+        "First_name" : "Fares",
+        "Email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b8"),
+        "Last_name" : "Kefi",
+        "First_name" : "Seif",
+        "Email" : "Seif@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b9"),
+        "Last_name" : "Fatnassi",
+        "First_name" : "Sarra",
+        "Email" : "Sarra@gmail.com",
+        "age" : 40
+}
+> show dbs
+admin    0.000GB
+config   0.000GB
+contact  0.000GB
+local    0.000GB
+> show db
+uncaught exception: Error: don't know how to show [db] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> db.con
+db.constructor  db.contactlist
+> db.contactlist.u
+db.contactlist.unhideIndex(        db.contactlist.update(             db.contactlist.updateOne(
+db.contactlist.unsetWriteConcern(  db.contactlist.updateMany(
+> db.contactlist.update
+db.contactlist.update(      db.contactlist.updateMany(  db.contactlist.updateOne(
+> db.contactlist.updateOne({_id:ObjectId("62a84e99b9b19cd8671d61b9")},{$set:{"First_name":"Mohamed Amine"}}
+... ^C
+
+> db.contactlist.updateOne({_id:ObjectId("62a84e99b9b19cd8671d61b9")},{$set:{"First_name":"Mohamed Amine"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.contactlist.find().pretty()
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b7"),
+        "Last_name" : "Ben Lahmer",
+        "First_name" : "Fares",
+        "Email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b8"),
+        "Last_name" : "Kefi",
+        "First_name" : "Seif",
+        "Email" : "Seif@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b9"),
+        "Last_name" : "Fatnassi",
+        "First_name" : "Mohamed Amine",
+        "Email" : "Sarra@gmail.com",
+        "age" : 40
+}
+> db.contactlist.deleteMany({ age :*<20 })
+uncaught exception: SyntaxError: expected expression, got '*' :
+@(shell):1:33
+> db.contactlist.deleteMany({ age :.<20 })
+uncaught exception: SyntaxError: expected expression, got '.' :
+@(shell):1:33
+> db.contactlist.deleteMany({ age :<20 })
+uncaught exception: SyntaxError: expected expression, got '<' :
+@(shell):1:33
+> db.contactlist.deleteMany({ age : { $lt: 20 } })
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.contactlist.find().pretty()
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b7"),
+        "Last_name" : "Ben Lahmer",
+        "First_name" : "Fares",
+        "Email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("62a84e99b9b19cd8671d61b9"),
+        "Last_name" : "Fatnassi",
+        "First_name" : "Mohamed Amine",
+        "Email" : "Sarra@gmail.com",
+        "age" : 40
+}
+>
